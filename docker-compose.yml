@@ -4,33 +4,36 @@ services:
     container_name: ciac_db
     environment:
       ACCEPT_EULA: "Y"
-      MSSQL_SA_PASSWORD: "Ares4421096"
+      MSSQL_SA_PASSWORD: "Ares4421096!"
     ports:
       - "1433:1433"
     volumes:
       - ciac_sql_data:/var/opt/mssql
 
   api:
+    image: ciac-tas/api:1.0
     build:
-      context: ./CIAC-TAS-Service-API
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: CIAC-TAS-Service-API/CIAC-TAS-Service/Dockerfile
     container_name: ciac_api
     environment:
       ASPNETCORE_ENVIRONMENT: "Development"
-      ConnectionStrings__DefaultConnection: "Server=db;Database=CIAC_TAS;User Id=sa;Password=Ares4421096;TrustServerCertificate=True;Encrypt=False"
+      ConnectionStrings__DefaultConnection: "Server=db;Database=CIAC_TAS;User Id=sa;Password=Ares4421096!;TrustServerCertificate=True;Encrypt=False"
     ports:
-      - "8080:8080"
+      - "5001:5001"
     depends_on:
       - db
 
   web:
+    image: ciac-tas/web:1.0
     build:
-      context: ./CIAC-TAS-Web-FrontEnd
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: CIAC-TAS-Web-FrontEnd/CIAC-TAS-Web-FrontEnd/CIAC-TAS-Web-UI/Dockerfile
     container_name: ciac_web
     environment:
       ASPNETCORE_ENVIRONMENT: "Development"
-      ApiSettings__BaseUrl: "http://api:8080"
+      ServiceUrl: "http://api:5001"
+      ApiSettings__BaseUrl: "http://api:5001"
     ports:
       - "8081:8081"
     depends_on:
