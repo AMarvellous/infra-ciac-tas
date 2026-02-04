@@ -11,7 +11,7 @@ services:
       - ciac_sql_data:/var/opt/mssql
 
   api:
-    image: ciac-tas/api:1.0
+    image: amarvellous/ciac-tas-api:1.0
     build:
       context: .
       dockerfile: CIAC-TAS-Service-API/CIAC-TAS-Service/Dockerfile
@@ -25,7 +25,7 @@ services:
       - db
 
   web:
-    image: ciac-tas/web:1.0
+    image: amarvellous/ciac-tas-web:1.0
     build:
       context: .
       dockerfile: CIAC-TAS-Web-FrontEnd/CIAC-TAS-Web-FrontEnd/CIAC-TAS-Web-UI/Dockerfile
